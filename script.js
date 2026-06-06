@@ -358,7 +358,17 @@ function showDayDetail(day, year, month) {
       <div class="detail-row"><span class="detail-label">Pouls</span><span class="detail-value">${entry.pouls ? entry.pouls + ' bpm' : '—'}</span></div>
       <div class="detail-row"><span class="detail-label">Catégorie</span><span class="detail-value" style="color:${cat.color}">${cat.label}</span></div>
       ${entry.time ? `<div class="detail-row"><span class="detail-label">Heure</span><span class="detail-value">${entry.time}</span></div>` : ''}
+      <button class="btn-primary" id="btn-delete-detail" style="margin-top: 20px; background-color: var(--red-status, #EF4444); border: none; width: 100%;">Supprimer cette mesure</button>
     `;
+
+    document.getElementById('btn-delete-detail').addEventListener('click', () => {
+      if (confirm('Voulez-vous vraiment supprimer cette mesure ?')) {
+        deleteDayData(year, month, day);
+        showToast('🗑️ Mesure supprimée');
+        $('day-detail-overlay').classList.remove('show');
+        refreshCalendar();
+      }
+    });
   } else {
     $('day-detail-content').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px 0;">Aucune mesure ce jour.</p>';
   }
